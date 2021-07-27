@@ -1,0 +1,19 @@
+name: Deploy version
+
+on:
+  push:
+    tags: v*.*.*
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out repository code
+      uses: actions/checkout@v2
+    - name: Publish
+      uses: matthewp/cdn-spooky-deploy-action@v2
+      with:
+        key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY}}
+        pkg: 'ocean'
+        source: 'lib'
