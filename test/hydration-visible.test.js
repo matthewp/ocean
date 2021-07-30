@@ -29,8 +29,7 @@ Deno.test('Adds an inline script to load on visibility', async () => {
     <my-visible-element ocean-hydrate="visible"></my-visible-element>
   `;
   let out = await consume(iter);
-  console.log(out);
-  /*let doc = parse(out);
+  let doc = parse(out);
   assert(doc.querySelector('script'));
-  assert(doc.querySelector('ocean-hydrate-visible[src="/elements/my-visible-element.js"]'));*/
+  assert(doc.querySelector('ocean-hydrate-visible[src="/elements/my-visible-element.js"]'));
 });
