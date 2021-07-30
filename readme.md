@@ -5,8 +5,8 @@ Custom element rendering tools.
 ## Usage
 
 ```js
-import 'https://cdn.spooky.click/ocean/0.1.0/shim.js?global';
-import { Ocean } from 'https://cdn.spooky.click/ocean/0.1.0/mod.js';
+import 'https://cdn.spooky.click/ocean/0.2.0/shim.js?global';
+import { Ocean } from 'https://cdn.spooky.click/ocean/0.2.0/mod.js';
 
 const { HTMLElement, customElements, document } = globalThis;
 
