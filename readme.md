@@ -102,8 +102,8 @@ Ocean is tested against popular web component libraries. These tests are not all
 
 | Library    | Compatible | Notes                            |
 |------------|------------|----------------------------------|
-| Lit        | ✔          |                                  |
-| Preact     | ✔          |                                  |
-| petite-vue | ✔          |                                  |
-| Haunted    | ✔          |                                  |
+| Lit        | ✓          |                                  |
+| Preact     | ✓          |                                  |
+| petite-vue | ✓          |                                  |
+| Haunted    | ✓          |                                  |
 | Fast       | ✖          | Heavily relies on DOM internals. |
