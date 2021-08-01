@@ -2,7 +2,7 @@
 
 Web component HTML rendering that includes:
 
-* Rendering with [Declarative Shadow DOM](https://web.dev/declarative-shadow-dom/), requiring no JavaScript in the client.
+* Rendering to [Declarative Shadow DOM](https://web.dev/declarative-shadow-dom/), requiring no JavaScript in the client.
 * Automatic inclusion of the Declarative Shadow DOM polyfill for browsers without support.
 * Streaming HTML responses.
 * Compatibility with the most popular web component libraries (see a compatibility list below).
@@ -50,6 +50,20 @@ let iterator = html`
 for await(let chunk of iterator) {
   console.log(chunk); // HTML string
 }
+```
+
+The above will generate the following HTML:
+
+```html
+<!doctype html>
+<html lang="en">
+<title>My app</title>
+
+<app-root>
+  <template shadowroot="open">
+    <div>This is an app!</div>
+  </template>
+</app-root>
 ```
 
 ## Modules
@@ -145,7 +159,11 @@ let iterator = html`
   <html lang="en">
   <title>My app</title>
 
-  <app-sidebar></app-sidebar>
+  <app-sidebar>
+    <template shadowroot="open">
+      <div>My sidebar...</div>
+    </template>
+  </app-sidebar>
 `;
 
 let out = '';
@@ -332,12 +350,64 @@ let { html } = new Ocean({
 
 #### Custom hydrator
 
+A hydrator is an object that specifies how to hydrate the element. You can create a custom hydrator and pass it to the `hydrators` option.
+
+The following is a hydrator that hydrates whenever the element is clicked.
+
+```js
+const clickHydrator = {
+  condition: 'click',
+  tagName: 'my-click-hydrator',
+  renderMultiple: true,
+  script() {
+    return /* js */ `customElements.define('${this.tagName}', class extends HTMLElement {
+  connectedCallback() {
+    let el = this.previousElementSibling;
+    let src = this.getAttribute('src');
+    el.addEventListener('click', () => import(src), { once: true });
+  }
+})`;
+  }
+};
+
+let { html } = new Ocean({
+  document,
+  hydrators: [
+    clickHydrator
+  ]
+})
+```
+
+Which you would use like so:
+
+```js
+let iterator = html`
+  <!doctype html>
+  <html lang="en">
+  <title>My site</title>
+
+  <app-sidebar ocean-hydrate="click"></app-sidebar>
+`;
+```
+
+The properties of a hydrator are (all required):
+
+* __condition__: This is the value used with `ocean-hydrate` to trigger the hydrator to be used.
+* __tagName__: Hydrators are implemented as custom elements. The `tagName` is the custom element tag name.
+* __renderMultiple__: This says that the custom element should be rendered for each element that uses the hydrator. Use `false` when hydrating is done without regard for the element. For example *idle* is `false` because it always just waits for CPU idle, so this only needs to be done once.
+* __script()__: A function which returns the custom element definition.
+
+The following are optional properties:
+
+* __mutate(customElement, node)__: Gives you a change to modify the hydration custom element being rendered, for example to add information needed to perform hydration. __HydrateMedia__ uses this method to add the query to the custom element.
+
 ## Compatibility
 
 Ocean is tested against popular web component libraries. These tests are not all inclusive, test contributions are very much welcome.
 
 | Library    | Compatible | Notes                            |
 |------------|------------|----------------------------------|
+| Vanilla    | ✔          |                                  |
 | Lit        | ✔          |                                  |
 | Preact     | ✔          |                                  |
 | petite-vue | ✔          |                                  |
