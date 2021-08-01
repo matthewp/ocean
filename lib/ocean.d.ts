@@ -1,7 +1,7 @@
 import type { Hydrator } from './hydration.js';
 
 export interface OceanOptions {
-  document: Document;
+  document: any;
   hydration: 'full' | 'partial' | 'none';
   hydrators: Hydrator[];
   polyfillURL: string;

@@ -5,16 +5,35 @@ export interface Hydrator {
   script(): string;
 }
 
-declare export class HydrateLoad implements Hydrator {}
+export declare class HydrateLoad {
+  condition: 'load';
 
-declare export class HydrateIdle implements Hydrator {
-  constructor(public tagName: string);
+  constructor();
 }
 
-declare export class HydrateMedia implements Hydrator {
-  constructor(public tagName: string, public mediaAttr: string);
+export declare class HydrateIdle implements Hydrator {
+  condition: 'idle';
+  tagName: string;
+  renderMultiple: boolean;
+
+  constructor(tagName: string);
+  script(): string;
 }
 
-declare export class HydrateVisible implements Hydrator {
-  constructor(public tagName: string);
+export declare class HydrateMedia implements Hydrator {
+  condition: 'media';
+  tagName: string;
+  renderMultiple: boolean;
+
+  constructor(tagName: string, mediaAttr: string);
+  script(): string;
+}
+
+export declare class HydrateVisible implements Hydrator {
+  condition: 'visible';
+  tagName: string;
+  renderMultiple: boolean;
+
+  constructor(tagName: string);
+  script(): string;
 }
