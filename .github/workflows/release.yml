@@ -13,7 +13,7 @@ jobs:
     - name: Bundle
       run: deno bundle lib/mod.js lib/mod.bundle.js
     - name: Publish
-      uses: matthewp/cdn-spooky-deploy-action@v3.beta.1
+      uses: matthewp/cdn-spooky-deploy-action@v3.beta.2
       with:
         key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY}}

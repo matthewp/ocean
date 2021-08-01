@@ -5,7 +5,7 @@ case "$1" in
     deno test --allow-net --allow-env --allow-write --allow-read --allow-run --unstable
     ;;
   core )
-    echo "Cannot only test core at this time"
+    OCEAN_CORE=1 deno test --allow-net --allow-env --allow-write --allow-read --allow-run --unstable
     ;;
   worker )
     deno test --allow-net --allow-env --allow-write --allow-read --allow-run --unstable test/worker.test.js

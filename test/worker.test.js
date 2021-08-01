@@ -64,19 +64,23 @@ async function getBrowser() {
   return browser;
 }
 
-Deno.test('Can run in a worker', async () => {
-  let server = new Server();
-  let browser = await getBrowser();
-  let page = await browser.newPage();
-  await page.goto('http://localhost:8082/test/worker.html');
-  try {
-    let result = await server.next();
-    assertEquals(result.ok, true);
-  } catch(_err) {
-    assert(false, 'Got an error');
-  } finally {
-    await browser.close();
-    await server.close();
+Deno.test({
+  name: 'Can run in a worker',
+  ignore: Deno.env.get('OCEAN_CORE') == 1,
+  fn: async () => {
+    let server = new Server();
+    let browser = await getBrowser();
+    let page = await browser.newPage();
+    await page.goto('http://localhost:8082/test/worker.html');
+    try {
+      let result = await server.next();
+      assertEquals(result.ok, true);
+    } catch(_err) {
+      assert(false, 'Got an error');
+    } finally {
+      await browser.close();
+      await server.close();
+    }
   }
 });
 
