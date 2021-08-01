@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<title>Web worker test</title>
+<script>
+  let worker = new Worker('./worker.js', { type: 'module' });
+  worker.onerror = ev => {
+    fetch('/error', {
+      method: 'POST',
+      headers: {
+        'content-type': 'text/plain'
+      },
+      body: JSON.stringify({
+        error: {
+          name: event.name,
+          message: event.message,
+          filename: event.filename,
+          lineno: event.lineno
+        }
+      })
+    });
+  };
+  worker.onmessage = ev => {
+    fetch('/result', {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json'
+      },
+      body: JSON.stringify(ev.data)
+    });
+  };
+</script>

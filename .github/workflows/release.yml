@@ -10,6 +10,8 @@ jobs:
     steps:
     - name: Check out repository code
       uses: actions/checkout@v2
+    - name: Bundle
+      run: deno bundle lib/mod.js lib/mod.bundle.js
     - name: Publish
       uses: matthewp/cdn-spooky-deploy-action@v3.beta.1
       with:
