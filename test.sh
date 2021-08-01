@@ -2,7 +2,7 @@
 
 case "$1" in
   all )
-    deno test --allow-net --allow-env --allow-write --allow-read --allow-run
+    deno test --allow-net --allow-env --allow-write --allow-read --allow-run --unstable
     ;;
   core )
     echo "Cannot only test core at this time"

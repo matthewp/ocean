@@ -1,5 +1,5 @@
 import '../lib/shim.js?global';
-import { Ocean } from '../mod.bundle.js';
+import { Ocean } from '../lib/mod.bundle.js';
 
 console.log(Ocean);
 
