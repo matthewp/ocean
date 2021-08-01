@@ -8,6 +8,8 @@ Web component HTML rendering that includes:
 * Compatibility with the most popular web component libraries (see a compatibility list below).
 * Lazy [partial hydration](https://www.jameshill.dev/articles/partial-hydration/) via special attributes: hydrate on page load, CPU idle, element visibility, or media queries. Or create your own hydrator.
 
+---
+
 __Table of Contents__
 
 * __[Overview](#overview)__
