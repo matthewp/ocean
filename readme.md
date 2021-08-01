@@ -1,4 +1,4 @@
-# Ocean
+# 🌊 Ocean
 
 Web component HTML rendering that includes:
 
@@ -95,6 +95,242 @@ import 'https://cdn.spooky.click/ocean/0.2.1/shim.js';
 const root = globalThis[Symbol.for('dom-shim.defaultView')];
 const { HTMLElement, customElements, document } = root;
 ```
+
+## Hydration
+
+Partial hydration is the practice of only hydrating (via running client JavaScript) components that are needed for interactivity. Ocean *does not* automatically add scripts for components by default. However Ocean does support both full and partial hydration. This means you can omit the component script tags from your HTML and Ocean will automatically add them for you.
+
+In order to add script tags you have to provide Ocean a map of tag names to URLs to load. You do this through the `elements` [Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map) that is returned from the constructor.
+
+```js
+let { html, elements } = new Ocean({
+  document
+});
+
+elements.set('app-sidebar', '/elements/app-sidebar.js');
+```
+
+> *Note*: Ocean only adds script tags for elements that are *server rendered*. If you are not server rendering an element you will need to add the appropriate script tags yourself.
+
+### Full hydration
+
+Full hydration means added script tags to the `<head>` for any components that are server rendered. You can enable full hydration by passing this in the constructor:
+
+```js
+let { html, elements } = new Ocean({
+  document,
+  hydration: 'full'
+});
+
+elements.set('app-sidebar', '/elements/app-sidebar.js');
+
+customElements.define('app-sidebar', class extends HTMLElement {
+  constructor() {
+    super();
+    this.attachShadow({ mode: 'open' });
+  }
+  connectedCallback() {
+    let div = document.createElement('div');
+    div.textContent = `My sidebar...`;
+    this.shadowRoot.append(div);
+  }
+});
+```
+
+Then when you render this element, it will include the script tags:
+
+```js
+let iterator = html`
+  <!doctype html>
+  <html lang="en">
+  <title>My app</title>
+
+  <app-sidebar></app-sidebar>
+`;
+
+let out = '';
+for(let chunk of iterator) {
+  out += chunk;
+}
+```
+
+Will produce this HTML:
+
+```html
+<!doctype html>
+<html lang="en">
+<title>My app</title>
+<script type="module" src="/elements/app-sidebar.js"></script>
+
+<app-sidebar></app-sidebar>
+```
+
+### Partial hydration
+
+By default Ocean uses partial hydration. In partial hydration script tags are only added when you explicitly tell Ocean to hydration an element. This means that by default elements will be rendered to HTML only, and never iteractive on the client.
+
+This allows you to use the web component libraries you love both to produce static HTML and for interactive content.
+
+To declare an element to be hydrated, use the `ocean-hydrate` attribute on any element. The value should be one of:
+
+* __load__: Hydrate when the page loads. Ocean will add a `<script type="module">` tag for the element's script.
+* __idle__: Hydrate when the CPU becomes idle. Ocean will add an inline script that waits for `requestIdleCallback` and then loads the element's script.
+* __media__: Hydrates on a matching media query. This allows you to have some elements which only hydrate for certain screen sizes. Use the `ocean-query` attribute to specify the media query.
+* __visible__: Hydrate when the element becomes visible. This is useful for elements which are shown further down the page. Ocean will add an inline script that uses [Intersection Observer](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API) to determine when the element is visible and then loads the script.
+
+Using one of these hydrators looks like:
+
+```js
+let iterator = html`
+  <!doctype html>
+  <html lang="en">
+  <title>My site</title>
+
+  <app-sidebar ocean-hydrate="idle"></app-sidebar>
+`;
+```
+
+
+
+#### Hydrator options
+
+You can specify which hydrators you want to use by providing the `hydrators` option to Ocean. Each of the default hydrators are included by default, but can also be imported.
+
+```js
+import {
+  HydrateIdle,
+  HydrateLoad,
+  HydrateMedia,
+  HydrateVisible,
+  Ocean
+} from 'https://cdn.spooky.click/ocean/0.2.1/mod.js';
+```
+
+##### Load
+
+To specify to hydrate on load, pass `load` into the `ocean-hydrate` attr:
+
+```js
+let { html } = new Ocean({ document });
+
+let iterator = html`
+  <!doctype html>
+  <html lang="en">
+  <title>My site</title>
+
+  <app-sidebar ocean-hydrate="load"></app-sidebar>
+`;
+```
+
+__HydrateLoad__ does not take any options because it only adds a script tag to the head. You can create an instance by calling `new` on it:
+
+```js
+import { HydrateLoad, Ocean } from 'https://cdn.spooky.click/ocean/0.2.1/mod.js';
+
+let { html } = new Ocean({
+  document,
+  hydrators: [
+    new HydrateLoad()
+  ]
+});
+```
+
+##### Idle
+
+To specify to hydrate on idle, pass `idle` into the `ocean-hydrate` attr:
+
+```js
+let { html } = new Ocean({ document });
+
+let iterator = html`
+  <!doctype html>
+  <html lang="en">
+  <title>My site</title>
+
+  <app-sidebar ocean-hydrate="idle"></app-sidebar>
+`;
+```
+
+__HydrateIdle__ uses a custom element to perform hydration when the CPU is idle. By default that custom element name is `ocean-hydrate-idle`. You can specify a different custom element name by passing it into the constructor.
+
+```js
+import { HydrateIdle, Ocean } from 'https://cdn.spooky.click/ocean/0.2.1/mod.js';
+
+let { html } = new Ocean({
+  document,
+  hydrators: [
+    new HydrateIdle('my-app-hydrate-idle')
+  ]
+});
+```
+
+##### Media
+
+To hydrate on a media query, pass `media` into the `ocean-hydrate` attr, and also provide a `ocean-query` attr with the media query to use:
+
+```js
+let { html } = new Ocean({ document });
+
+let iterator = html`
+  <!doctype html>
+  <html lang="en">
+  <title>My site</title>
+
+  <app-sidebar ocean-hydrate="media" ocean-query="(max-width: 700px)"></app-sidebar>
+`
+```
+
+__HydrateMedia__ uses the custom element `ocean-hydrate-media` to hydrate your custom element. You can customize this, and also the attribute used for the query by passing those arguments into the constructor:
+
+```js
+import { HydrateMedia, Ocean } from 'https://cdn.spooky.click/ocean/0.2.1/mod.js';
+
+let { html } = new Ocean({
+  document,
+  hydrators: [
+    new HydrateMedia('my-app-hydrate-media', 'app-query')
+  ]
+});
+
+let iterator = html`
+  <!doctype html>
+  <html lang="en">
+  <title>My site</title>
+
+  <app-sidebar ocean-hydrate="media" app-query="(max-width: 700px)"></app-sidebar>
+`;
+```
+
+##### Visible
+
+To specify to hydrate on element visibility, pass `visible` into the `ocean-hydrate` attr:
+
+```js
+let { html } = new Ocean({ document });
+
+let iterator = html`
+  <!doctype html>
+  <html lang="en">
+  <title>My site</title>
+
+  <app-sidebar ocean-hydrate="visible"></app-sidebar>
+`;
+```
+
+__HydrateVisible__ uses the custom element `ocean-hydrate-visible` to track when your element is visible. You can customize this custom element tag name by passing in something else into the constructor:
+
+```js
+import { HydrateVisible, Ocean } from 'https://cdn.spooky.click/ocean/0.2.1/mod.js';
+
+let { html } = new Ocean({
+  document,
+  hydrators: [
+    new HydrateVisible('my-app-hydrate-visible')
+  ]
+});
+```
+
+#### Custom hydrator
 
 ## Compatibility
 
