@@ -8,6 +8,17 @@ Web component HTML rendering that includes:
 * Compatibility with the most popular web component libraries (see a compatibility list below).
 * Lazy [partial hydration](https://www.jameshill.dev/articles/partial-hydration/) via special attributes: hydrate on page load, CPU idle, element visibility, or media queries. Or create your own hydrator.
 
+__Table of Contents__
+
+* __[Overview](#overview)__
+* __[Modules](#modules)__
+  * __[Main module](#main-module)__
+  * __[DOM shim](#dom-shim)__
+* __[Hydration](#hydration)__
+  * __[Full hydration](#full-hydration)__
+  * __[Partial hydration](#partial-hydration)__
+* __[Compatibility](#compatibility)__
+
 ## Overview
 
 An *ocean* is an environment for rendering web component code. It provides an `html` function that looks like the ones you're used to from libraries like [uhtml](https://github.com/WebReflection/uhtml) and [Lit](https://lit.dev/). Instead of creating reactive DOM in the client like those libraries, Ocean's `html` returns an *async iterator* that will stream out HTML strings.
@@ -207,8 +218,6 @@ let iterator = html`
   <app-sidebar ocean-hydrate="idle"></app-sidebar>
 `;
 ```
-
-
 
 #### Hydrator options
 
