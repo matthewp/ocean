@@ -10,6 +10,10 @@ jobs:
     steps:
     - name: Check out repository code
       uses: actions/checkout@v2
+    - name: Use Deno
+      uses: denoland/setup-deno@v1
+      with:
+        deno-version: v1.x
     - name: Bundle
       run: deno bundle lib/mod.js lib/mod.bundle.js
     - name: Publish
