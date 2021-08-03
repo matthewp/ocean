@@ -427,3 +427,4 @@ Ocean is tested against popular web component libraries. These tests are not all
 | [Preact](https://preactjs.com/)                   | ✔          |                                                                |
 | [petite-vue](https://github.com/vuejs/petite-vue) | ✔          |                                                                |
 | [FAST](https://www.fast.design/)                  | ✖          | Heavily relies on DOM internals.                               |
+| [LWC](https://lwc.dev/)                           | ?          | Could not figure out how to build to standalone JavaScript.    |
