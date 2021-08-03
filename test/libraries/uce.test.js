@@ -20,7 +20,6 @@ Deno.test({
   
     let iter = html`<uce-el></uce-el>`;
     let out = await consume(iter);
-    console.log(out);
     assertStringIncludes(out, '<div>testing</div>');
   }
 });
