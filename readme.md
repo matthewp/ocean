@@ -71,6 +71,7 @@ The above will generate the following HTML:
 <!doctype html>
 <html lang="en">
 <title>My app</title>
+<script type="module" src="/webcomponents/declarative-shadow-dom.js"></script>
 
 <app-root>
   <template shadowroot="open">
