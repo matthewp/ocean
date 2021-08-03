@@ -1,5 +1,5 @@
 import '../../lib/shim.js?global';
-import { c, html as ahtml } from 'https://cdn.skypack.dev/atomico@1.27.0';
+//import { c, html as ahtml } from 'https://cdn.skypack.dev/atomico@1.27.0';
 import { Ocean } from '../../lib/mod.js';
 import { consume, document, customElements } from '../helpers.js';
 import { assertStringIncludes } from '../deps.js';
