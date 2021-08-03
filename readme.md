@@ -421,7 +421,8 @@ Ocean is tested against popular web component libraries. These tests are not all
 |------------|------------|----------------------------------|
 | Vanilla    | ✔          |                                  |
 | Lit        | ✔          |                                  |
+| Haunted    | ✔          |                                  |
+| Atomico    | ✖          | Waiting on https://github.com/WebReflection/linkedom/issues/90 |
 | Preact     | ✔          |                                  |
 | petite-vue | ✔          |                                  |
-| Haunted    | ✔          |                                  |
 | Fast       | ✖          | Heavily relies on DOM internals. |
