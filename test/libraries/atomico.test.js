@@ -21,7 +21,6 @@ Deno.test({
     let { html } = new Ocean({ document });
     let iter = html`<atomico-el></atomico-el>`;
     let out = await consume(iter);
-    console.log(out);
     let doc = parse(out);
     let cel = doc.querySelector('atomico-el');
     assert(cel);
