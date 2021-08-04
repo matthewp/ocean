@@ -417,13 +417,13 @@ The following are optional properties:
 
 Ocean is tested against popular web component libraries. These tests are not all inclusive, test contributions are very much welcome.
 
-| Library                                           | Compatible | Notes                                                          |
-|---------------------------------------------------|------------|----------------------------------------------------------------|
-| Vanilla                                           | ✔          |                                                                |
-| [Lit](https://lit.dev/)                           | ✔          |                                                                |
-| [Haunted](https://github.com/matthewp/haunted)    | ✔          |                                                                |
-| [Atomico](https://atomicojs.github.io/)           | ✖          | Waiting on https://github.com/WebReflection/linkedom/issues/90 |
-| [uce](https://github.com/WebReflection/uce)       | ✔          |                                                                |
-| [Preact](https://preactjs.com/)                   | ✔          |                                                                |
-| [petite-vue](https://github.com/vuejs/petite-vue) | ✔          |                                                                |
-| [FAST](https://www.fast.design/)                  | ✖          | Heavily relies on DOM internals.                               |
+| Library                                           | Compatible | Notes                            |
+|---------------------------------------------------|------------|----------------------------------|
+| Vanilla                                           | ✔          |                                  |
+| [Lit](https://lit.dev/)                           | ✔          |                                  |
+| [Haunted](https://github.com/matthewp/haunted)    | ✔          |                                  |
+| [Atomico](https://atomicojs.github.io/)           | ✔          |                                  |
+| [uce](https://github.com/WebReflection/uce)       | ✔          |                                  |
+| [Preact](https://preactjs.com/)                   | ✔          |                                  |
+| [petite-vue](https://github.com/vuejs/petite-vue) | ✔          |                                  |
+| [FAST](https://www.fast.design/)                  | ✖          | Heavily relies on DOM internals. |
