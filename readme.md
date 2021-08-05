@@ -421,6 +421,7 @@ Ocean is tested against popular web component libraries. These tests are not all
 |---------------------------------------------------|------------|----------------------------------|
 | Vanilla                                           | ✔          |                                  |
 | [Lit](https://lit.dev/)                           | ✔          |                                  |
+| [Stencil](https://stenciljs.com/)                 | ✔          |                                  |
 | [Haunted](https://github.com/matthewp/haunted)    | ✔          |                                  |
 | [Atomico](https://atomicojs.github.io/)           | ✔          |                                  |
 | [uce](https://github.com/WebReflection/uce)       | ✔          |                                  |
