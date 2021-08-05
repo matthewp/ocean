@@ -60,9 +60,11 @@ let iterator = html`
   <app-root></app-root>
 `;
 
+let code = '';
 for await(let chunk of iterator) {
-  console.log(chunk); // HTML string
+  code += chunk;
 }
+console.log(chunk); // HTML string
 ```
 
 The above will generate the following HTML:
@@ -71,8 +73,8 @@ The above will generate the following HTML:
 <!doctype html>
 <html lang="en">
 <title>My app</title>
-<script type="module" src="/webcomponents/declarative-shadow-dom.js"></script>
 
+<script type="module">const o=(new DOMParser).parseFromString('<p><template shadowroot="open"></template></p>',"text/html",{includeShadowRoots:!0}).querySelector("p");o&&o.shadowRoot||async function(){const{hydrateShadowRoots:o}=await import("/webcomponents/declarative-shadow-dom.js");o(document.body)}()</script>
 <app-root>
   <template shadowroot="open">
     <div>This is an app!</div>
