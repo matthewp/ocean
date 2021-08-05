@@ -428,4 +428,4 @@ Ocean is tested against popular web component libraries. These tests are not all
 | [Preact](https://preactjs.com/)                   | ✔          |                                                                  |
 | [petite-vue](https://github.com/vuejs/petite-vue) | ✔          |                                                                  |
 | [FAST](https://www.fast.design/)                  | ✖          | Heavily relies on DOM internals.                                 |
-| [Lightning Web Components](https://lwc.dev/)      | ✖          | I can't figure out how to export an LWC, if you can help see #11 |
+| [Lightning Web Components](https://lwc.dev/)      | ✖          | I can't figure out how to export an LWC, if you can help see [#11](https://github.com/matthewp/ocean/issues/11) |
