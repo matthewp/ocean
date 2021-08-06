@@ -175,11 +175,7 @@ let iterator = html`
   <html lang="en">
   <title>My app</title>
 
-  <app-sidebar>
-    <template shadowroot="open">
-      <div>My sidebar...</div>
-    </template>
-  </app-sidebar>
+  <app-sidebar></app-sidebar>
 `;
 
 let out = '';
@@ -196,7 +192,11 @@ Will produce this HTML:
 <title>My app</title>
 <script type="module" src="/elements/app-sidebar.js"></script>
 
-<app-sidebar></app-sidebar>
+<app-sidebar>
+  <template shadowroot="open">
+    <div>My sidebar...</div>
+  </template>
+</app-sidebar>
 ```
 
 ### Partial hydration
