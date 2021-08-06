@@ -4,10 +4,10 @@ import '../../lib/shim.js?global';
 import Wafer from 'https://cdn.skypack.dev/@lamplightdev/wafer@1.0.4';
 import { Ocean } from '../../lib/mod.js';
 import { consume, document, parse } from '../helpers.js';
-import { assert, assertEquals, assertStringIncludes } from '../deps.js';
+import { assert, assertEquals } from '../deps.js';
 
 Deno.test({
-  name: 'uce elements render',
+  name: 'Wafer elements render',
   fn: async () => {
     let { html } = new Ocean({ document });
 
