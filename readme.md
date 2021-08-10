@@ -28,8 +28,8 @@ An *ocean* is an environment for rendering web component code. It provides an `h
 Ocean is somewhat low-level and is meant to be used with a higher-level framework. Typical usage looks like this:
 
 ```js
-import 'https://cdn.spooky.click/ocean/1.1.1/shim.js?global';
-import { Ocean } from 'https://cdn.spooky.click/ocean/1.1.1/mod.js';
+import 'https://cdn.spooky.click/ocean/1.1.2/shim.js?global';
+import { Ocean } from 'https://cdn.spooky.click/ocean/1.1.2/mod.js';
 
 const { HTMLElement, customElements, document } = globalThis;
 
@@ -96,13 +96,13 @@ The main module for Ocean is available in two forms: bundled and unbundled.
 #### Unbundled
 
 ```js
-import { Ocean } from 'https://cdn.spooky.click/ocean/1.1.1/mod.js';
+import { Ocean } from 'https://cdn.spooky.click/ocean/1.1.2/mod.js';
 ```
 
 #### Bundled
 
 ```js
-import { Ocean } from 'https://cdn.spooky.click/ocean/1.1.1/mod.bundle.js';
+import { Ocean } from 'https://cdn.spooky.click/ocean/1.1.2/mod.bundle.js';
 ```
 
 ### DOM shim
@@ -112,7 +112,7 @@ Ocean's DOM shim is backed by [linkedom](https://github.com/WebReflection/linked
 It's important to import the DOM shim as one of the first imports in your app.
 
 ```js
-import 'https://cdn.spooky.click/ocean/1.1.1/shim.js?global';
+import 'https://cdn.spooky.click/ocean/1.1.2/shim.js?global';
 ```
 
 Notice that this includes in the `?global` query parameter. This makes the shim available on globals; you get `document`, `customElements`, and other commonly used global variables.
@@ -120,7 +120,7 @@ Notice that this includes in the `?global` query parameter. This makes the shim 
 If you do not want to shim the global environment you can omit the `?global` query parameter and instead get the globals yourself from the symbol `Symbol.for('dom-shim.defaultView')`. This is advanced usage.
 
 ```js
-import 'https://cdn.spooky.click/ocean/1.1.1/shim.js';
+import 'https://cdn.spooky.click/ocean/1.1.2/shim.js';
 
 const root = globalThis[Symbol.for('dom-shim.defaultView')];
 const { HTMLElement, customElements, document } = root;
@@ -235,7 +235,7 @@ import {
   HydrateMedia,
   HydrateVisible,
   Ocean
-} from 'https://cdn.spooky.click/ocean/1.1.1/mod.js';
+} from 'https://cdn.spooky.click/ocean/1.1.2/mod.js';
 ```
 
 ##### Load
@@ -257,7 +257,7 @@ let iterator = html`
 __HydrateLoad__ does not take any options because it only adds a script tag to the head. You can create an instance by calling `new` on it:
 
 ```js
-import { HydrateLoad, Ocean } from 'https://cdn.spooky.click/ocean/1.1.1/mod.js';
+import { HydrateLoad, Ocean } from 'https://cdn.spooky.click/ocean/1.1.2/mod.js';
 
 let { html } = new Ocean({
   document,
@@ -286,7 +286,7 @@ let iterator = html`
 __HydrateIdle__ uses a custom element to perform hydration when the CPU is idle. By default that custom element name is `ocean-hydrate-idle`. You can specify a different custom element name by passing it into the constructor.
 
 ```js
-import { HydrateIdle, Ocean } from 'https://cdn.spooky.click/ocean/1.1.1/mod.js';
+import { HydrateIdle, Ocean } from 'https://cdn.spooky.click/ocean/1.1.2/mod.js';
 
 let { html } = new Ocean({
   document,
@@ -315,7 +315,7 @@ let iterator = html`
 __HydrateMedia__ uses the custom element `ocean-hydrate-media` to hydrate your custom element. You can customize this, and also the attribute used for the query by passing those arguments into the constructor:
 
 ```js
-import { HydrateMedia, Ocean } from 'https://cdn.spooky.click/ocean/1.1.1/mod.js';
+import { HydrateMedia, Ocean } from 'https://cdn.spooky.click/ocean/1.1.2/mod.js';
 
 let { html } = new Ocean({
   document,
@@ -352,7 +352,7 @@ let iterator = html`
 __HydrateVisible__ uses the custom element `ocean-hydrate-visible` to track when your element is visible. You can customize this custom element tag name by passing in something else into the constructor:
 
 ```js
-import { HydrateVisible, Ocean } from 'https://cdn.spooky.click/ocean/1.1.1/mod.js';
+import { HydrateVisible, Ocean } from 'https://cdn.spooky.click/ocean/1.1.2/mod.js';
 
 let { html } = new Ocean({
   document,
