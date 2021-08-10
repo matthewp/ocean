@@ -126,3 +126,19 @@ Deno.test('No polyfill added if there is no head or html', async () => {
   let script = doc.querySelector('script');
   assert(!script, 'Polyfill script not included.');
 });
+
+Deno.test('No polyfill is added if there are no SSR components', async () => {
+  const { html } = new Ocean({
+    document,
+    polyfillURL: '/webcomponents/declarative-shadow-dom.js'
+  });
+
+  let iter = html`
+    <html lang="en">
+    <div id="testing">Testing</div>
+  `;
+  let out = await consume(iter);
+  let doc = parse(out);
+  let script = doc.querySelector('script');
+  assert(!script, 'Polyfill script not included.');
+});
