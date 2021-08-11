@@ -160,3 +160,18 @@ Deno.test('Props can be passed with dot syntax', async () => {
   assertStringIncludes(out, `<my-prop-el class="dark">`, 'Start tag no prop attr');
   assertStringIncludes(out, `<div id="name">Wilbur</div>`, 'Content from the prop');
 });
+
+Deno.test('Can render to HTML attributes', async () => {
+  let { html } = new Ocean({ document });
+  let url = 'http://example.com/something';
+  let iter = html`<a href="${url}">Stuff</a>`;
+  let out = await consume(iter);
+  assertEquals(out, `<a href="http://example.com/something">Stuff</a>`);
+});
+
+Deno.test('Can render to HTML attributes with multiple insertion points', async () => {
+  let { html } = new Ocean({ document });
+  let iter = html`<a href="http://example.com/something&client_id=${1234}&client_secret=${'pizza'}&more">Stuff</a>`;
+  let out = await consume(iter);
+  assertEquals(out, `<a href="http://example.com/something&client_id=1234&client_secret=pizza&more">Stuff</a>`);
+});
