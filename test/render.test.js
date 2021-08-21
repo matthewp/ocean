@@ -175,3 +175,17 @@ Deno.test('Can render to HTML attributes with multiple insertion points', async 
   let out = await consume(iter);
   assertEquals(out, `<a href="http://example.com/something&client_id=1234&client_secret=pizza&more">Stuff</a>`);
 });
+
+Deno.test('Can render to a title', async () => {
+  let { html } = new Ocean({ document });
+  let iter = html`<title>${'testing'}</title>`;
+  let out = await consume(iter);
+  assertEquals(out, `<title>testing</title>`);
+});
+
+Deno.test('Can render to a title with multiple insertions', async () => {
+  let { html } = new Ocean({ document });
+  let iter = html`<title>${'testing'} and ${'working'}</title>`;
+  let out = await consume(iter);
+  assertEquals(out, `<title>testing and working</title>`);
+});
