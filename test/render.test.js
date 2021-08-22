@@ -185,7 +185,15 @@ Deno.test('Can render to a title', async () => {
 
 Deno.test('Can render to a title with multiple insertions', async () => {
   let { html } = new Ocean({ document });
-  let iter = html`<title>${'testing'} and ${'working'}</title>`;
+  let iter = html`<title>${'testing'} and ${'working'}</title>${'<h1>more</h1>'}`;
   let out = await consume(iter);
-  assertEquals(out, `<title>testing and working</title>`);
+  assertEquals(out, `<title>testing and working</title><h1>more</h1>`);
+
+  iter = html`<title>and ${'working'}</title>${'<h1>more</h1>'}`;
+  out = await consume(iter);
+  assertEquals(out, `<title>and working</title><h1>more</h1>`);
+
+  iter = html`<title>${'testing'} and</title>${'<h1>more</h1>'}`;
+  out = await consume(iter);
+  assertEquals(out, `<title>testing and</title><h1>more</h1>`);
 });
