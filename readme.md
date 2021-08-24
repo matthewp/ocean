@@ -19,6 +19,7 @@ __Table of Contents__
 * __[Hydration](#hydration)__
   * __[Full hydration](#full-hydration)__
   * __[Partial hydration](#partial-hydration)__
+* __[Plugins](#plugins)__
 * __[Compatibility](#compatibility)__
 
 ## Overview
@@ -414,6 +415,31 @@ The properties of a hydrator are (all required):
 The following are optional properties:
 
 * __mutate(customElement, node)__: Gives you a change to modify the hydration custom element being rendered, for example to add information needed to perform hydration. __HydrateMedia__ uses this method to add the query to the custom element.
+
+## Plugins
+
+Ocean parses HTML into a DOM tree. Using plugins you can mutate the tree before it gets turned back into strings, allowing you to implement advanced behavior like syntax highlighting.
+
+For the most part custom elements should be the way you customize HTML rendering; plugins are here for cases where you need to modify built-in elements.
+
+The interface for a plugin is a function that returns an object with a `handle` method. The function is called during Ocean's internal optimization step:
+
+```js
+class MyHighlighter {
+  handle(node, head) {
+    // Mutate this node, add anything to the head that you need.
+  }
+
+  static createInstance() {
+    return new MyHighlighter();
+  }
+}
+
+let ocean = new Ocean({
+  document,
+  plugins: [MyHighlighter.createInstance]
+});
+```
 
 ## Compatibility
 

@@ -197,3 +197,10 @@ Deno.test('Can render to a title with multiple insertions', async () => {
   out = await consume(iter);
   assertEquals(out, `<title>testing and</title><h1>more</h1>`);
 });
+
+Deno.test('Can render nested HTML', async () => {
+  let { html } = new Ocean({ document });
+  let iter = html`<div><span>outer</span>${html`<span>inner</span>`}</div>`;
+  let out = await consume(iter);
+  assertEquals(out, `<div><span>outer</span><span>inner</span></div>`);
+});
