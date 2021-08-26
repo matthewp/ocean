@@ -164,9 +164,9 @@ Deno.test('Props can be passed with dot syntax', async () => {
 Deno.test('Can render to HTML attributes', async () => {
   let { html } = new Ocean({ document });
   let url = 'http://example.com/something';
-  let iter = html`<a href="${url}">Stuff</a>`;
+  let iter = html`<a href="${url}">Stuff</a><h1>${'title'}</h1>`;
   let out = await consume(iter);
-  assertEquals(out, `<a href="http://example.com/something">Stuff</a>`);
+  assertEquals(out, `<a href="http://example.com/something">Stuff</a><h1>title</h1>`);
 });
 
 Deno.test('Can render to HTML attributes with multiple insertion points', async () => {
