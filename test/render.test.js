@@ -231,4 +231,29 @@ Deno.test('Text is not serialized inside of scripts', async () => {
   let iter = html`<my-text-in-script-el></my-text-in-script-el>`;
   let out = await consume(iter);
   assertEquals(out, '<my-text-in-script-el><script>html`<div>inner</div>`;</script></my-text-in-script-el>');
+
+Deno.test('Attribute values are escaped in HTML', async () => {
+  let { html } = new Ocean({ document });
+  let iter = html`<div a='"a'></div>`;
+  let out = await consume(iter);
+  assertEquals(out, `<div a="&quot;a"></div>`);
+});
+
+Deno.test('Attribute values are escaped in custom elements', async () => {
+  let { html } = new Ocean({ document });
+  class AttributeElement extends HTMLElement {
+    constructor() {
+      super();
+      this.attachShadow({ mode: 'open' });
+    }
+    connectedCallback() {
+      let el = document.createElement('div');
+      el.setAttribute('a', '"a');
+      this.shadowRoot.append(el);
+    }
+  }
+  customElements.define('attribute-el', AttributeElement);
+  let iter = html`<div outer><attribute-el></attribute-el></div>`;
+  let out = await consume(iter);
+  assertStringIncludes(out, `<div a="&quot;a"></div>`, 'attribute values escaped');
 });
