@@ -204,3 +204,31 @@ Deno.test('Can render nested HTML', async () => {
   let out = await consume(iter);
   assertEquals(out, `<div><span>outer</span><span>inner</span></div>`);
 });
+
+Deno.test('Text is serialized', async () => {
+  let { html } = new Ocean({ document });
+  customElements.define('my-text-el', class extends HTMLElement {
+    connectedCallback() {
+      let div = document.createElement('div');
+      div.textContent = '<div>inner</div>';
+      this.append(div);
+    }
+  });
+  let iter = html`<my-text-el></my-text-el>`;
+  let out = await consume(iter);
+  assertEquals(out, `<my-text-el><div>&lt;div&gt;inner&lt;/div&gt;</div></my-text-el>`);
+});
+
+Deno.test('Text is not serialized inside of scripts', async () => {
+  let { html } = new Ocean({ document });
+  customElements.define('my-text-in-script-el', class extends HTMLElement {
+    connectedCallback() {
+      let el = document.createElement('script');
+      el.textContent = 'html`<div>inner</div>`;';
+      this.append(el);
+    }
+  });
+  let iter = html`<my-text-in-script-el></my-text-in-script-el>`;
+  let out = await consume(iter);
+  assertEquals(out, '<my-text-in-script-el><script>html`<div>inner</div>`;</script></my-text-in-script-el>');
+});
