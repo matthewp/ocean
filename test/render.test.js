@@ -231,6 +231,7 @@ Deno.test('Text is not serialized inside of scripts', async () => {
   let iter = html`<my-text-in-script-el></my-text-in-script-el>`;
   let out = await consume(iter);
   assertEquals(out, '<my-text-in-script-el><script>html`<div>inner</div>`;</script></my-text-in-script-el>');
+});
 
 Deno.test('Attribute values are escaped in HTML', async () => {
   let { html } = new Ocean({ document });
