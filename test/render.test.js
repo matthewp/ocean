@@ -258,3 +258,10 @@ Deno.test('Attribute values are escaped in custom elements', async () => {
   let out = await consume(iter);
   assertStringIncludes(out, `<div a="&quot;a"></div>`, 'attribute values escaped');
 });
+
+Deno.test('Can take an array of HTML content', async () => {
+  let { html } = new Ocean({ document });
+  let iter = html`<ul>${[1, 2, 3].map(n => html`<li>${n}</li>`)}</ul>`;
+  let out = await consume(iter);
+  assertEquals(out, `<ul><li>1</li><li>2</li><li>3</li></ul>`);
+});
