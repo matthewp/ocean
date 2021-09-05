@@ -161,6 +161,37 @@ Deno.test('Props can be passed with dot syntax', async () => {
   assertStringIncludes(out, `<div id="name">Wilbur</div>`, 'Content from the prop');
 });
 
+Deno.test('Multiple props can be passed with dot syntax', async () => {
+  let { html } = new Ocean({ document });
+  class MyPropEl extends HTMLElement {
+    constructor() {
+      super();
+      this.attachShadow({ mode: 'open' });
+    }
+    connectedCallback() {
+      let name = this.name;
+      let div = document.createElement('div');
+      div.id = "name";
+      div.textContent = name;
+      this.shadowRoot.append(div);
+
+      let city = this.city;
+      let div2 = document.createElement('div');
+      div2.id = 'city';
+      div2.textContent = city;
+      this.shadowRoot.append(div2);
+    }
+  }
+  customElements.define('my-multiprop-el', MyPropEl);
+  let iter = html`<my-multiprop-el .name="${'Wilbur'}" .city="${'London'}" class="dark"></my-multiprop-el>`;
+  let out = await consume(iter);
+
+  console.log(out);
+
+  assertStringIncludes(out, `<my-multiprop-el class="dark">`, 'Start tag no prop attrs');
+  assertStringIncludes(out, `<div id="name">Wilbur</div><div id="city">London</div>`, 'Content from the props');
+});
+
 Deno.test('Can render to HTML attributes', async () => {
   let { html } = new Ocean({ document });
   let url = 'http://example.com/something';
