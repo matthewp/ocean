@@ -1,5 +1,5 @@
 
-name: Create Version
+name: Create version
 
 on:
   workflow_dispatch:
