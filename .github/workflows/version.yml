@@ -1,0 +1,26 @@
+
+name: Create version
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'what version are you creating (ex: 1.0.0)'
+        required: true
+
+jobs:
+  version:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out repository code
+      uses: actions/checkout@v2
+    - name: Use Deno
+      uses: denoland/setup-deno@v1
+      with:
+        deno-version: v1.x
+    - name: Create Tag
+      run: |
+        deno run --allow-read --allow-write --allow-run \
+          https://cdn.spooky.click/spooky-release/0.0.6/cmd.js \
+          --pkg ocean --version ${{ github.event.inputs.version }} --files readme.md
+        git push origin v${{ github.event.inputs.version }}
