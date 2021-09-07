@@ -21,6 +21,6 @@ jobs:
     - name: Create Tag
       run: |
         deno run --allow-read --allow-write --allow-run \
-          https://cdn.spooky.click/ocean/0.0.6/cmd.js \
-          --pkg name --version ${{ github.event.inputs.version }} --files readme.md
+          https://cdn.spooky.click/spooky-release/0.0.6/cmd.js \
+          --pkg ocean --version ${{ github.event.inputs.version }} --files readme.md
         git push origin v${{ github.event.inputs.version }}
