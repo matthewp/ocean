@@ -19,6 +19,7 @@ __Table of Contents__
 * __[Hydration](#hydration)__
   * __[Full hydration](#full-hydration)__
   * __[Partial hydration](#partial-hydration)__
+* __[Relative links](#relative-links)__
 * __[Plugins](#plugins)__
 * __[Compatibility](#compatibility)__
 
