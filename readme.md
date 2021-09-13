@@ -416,6 +416,31 @@ The following are optional properties:
 
 * __mutate(customElement, node)__: Gives you a change to modify the hydration custom element being rendered, for example to add information needed to perform hydration. __HydrateMedia__ uses this method to add the query to the custom element.
 
+## Relative links
+
+When performing hydration or adding the declarative shadow DOM polyfill, Ocean adds links that you provide it. You can provide full URLs or pathnames like `/js/dsd-polyfill.js`. If you'd like for these links to be relative, you can use the `relativeTo` function to create an `html` that will produce relative links. Here's how you might use it in a service worker context:
+
+```js
+import 'https://cdn.spooky.click/ocean/1.2.6/shim.js?global';
+import { Ocean } from 'https://cdn.spooky.click/ocean/1.2.6/mod.js';
+
+let { relativeTo } = new Ocean({
+  document,
+  polyfillURL: '/js/dsd-polyfill.js'
+})
+
+addEventListener('fetch', event => {
+  let html = relativeTo(event.request.url);
+  let iter = html`
+    <!doctype html>
+    <html lang="en">
+    <!-- ... -->
+  `;
+});
+```
+
+The script tags added for the polyfill and for any element hydration will be relative to the event's URL.
+
 ## Plugins
 
 Ocean parses HTML into a DOM tree. Using plugins you can mutate the tree before it gets turned back into strings, allowing you to implement advanced behavior like syntax highlighting.

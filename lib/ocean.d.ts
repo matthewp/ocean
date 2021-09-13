@@ -14,6 +14,7 @@ declare class Ocean {
   constructor(opts?: OceanOptions);
 
   html(strings: string[], ...values: any[]): AsyncIterator<string, void, undefined>;
+  relativeTo(url: URL): (strings: string[], ...values: any[]) => AsyncIterator<string, void, undefined>;
 }
 
 export {
