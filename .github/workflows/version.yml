@@ -20,6 +20,8 @@ jobs:
         deno-version: v1.x
     - name: Create Tag
       run: |
+        git config user.email "matthew@matthewphillips.info"
+        git config user.name "Matthew Phillips"
         deno run --allow-read --allow-write --allow-run \
           https://cdn.spooky.click/spooky-release/0.0.6/cmd.js \
           --pkg ocean --version ${{ github.event.inputs.version }} --files readme.md
