@@ -264,6 +264,24 @@ Deno.test('Text is not serialized inside of scripts', async () => {
   assertEquals(out, '<my-text-in-script-el><script>html`<div>inner</div>`;</script></my-text-in-script-el>');
 });
 
+Deno.test('Text is not serialized inside of style tags', async () => {
+  let { html } = new Ocean({ document });
+  customElements.define('my-text-in-style-el', class extends HTMLElement {
+    constructor() {
+      super();
+      this.attachShadow({ mode: 'open'});
+    }
+    connectedCallback() {
+      this.shadowRoot.innerHTML = `
+        <style>#test > div { color: red; }</style>
+      `;
+    }
+  });
+  let iter = html`<my-text-in-style-el></my-text-in-style-el>`;
+  let out = await consume(iter);
+  assertStringIncludes(out, '<style>#test > div { color: red; }</style>', 'no escaping in style tags');
+});
+
 Deno.test('Attribute values are escaped in HTML', async () => {
   let { html } = new Ocean({ document });
   let iter = html`<div a='"a'></div>`;
