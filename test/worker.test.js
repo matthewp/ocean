@@ -1,4 +1,4 @@
-import puppeteer from 'https://deno.land/x/puppeteer@9.0.1/mod.ts';
+import puppeteer from 'https://deno.land/x/puppeteer@9.0.2/mod.ts';
 import { serve } from 'https://deno.land/std@0.103.0/http/server.ts';
 import { readAll } from 'https://deno.land/std@0.103.0/io/util.ts';
 import { assert, assertEquals } from './deps.js';

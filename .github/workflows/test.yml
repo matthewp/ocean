@@ -11,10 +11,10 @@ jobs:
     - name: Use Deno
       uses: denoland/setup-deno@v1
       with:
-        deno-version: v1.13.2
+        deno-version: v1.x
     - name: Bundle
       run: deno bundle lib/mod.js lib/mod.bundle.js
     - name: Install Puppeteer
-      run: PUPPETEER_PRODUCT=chrome deno run -A --unstable https://deno.land/x/puppeteer@9.0.1/install.ts
+      run: PUPPETEER_PRODUCT=chrome deno run -A --unstable https://deno.land/x/puppeteer@9.0.2/install.ts
     - name: Run the tests
       run: ./test.sh all
